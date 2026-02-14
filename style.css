@@ -1,0 +1,90 @@
+/* General Reset */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    background: #1a0b0b; /* Dark romantic background */
+    color: white;
+    font-family: 'Arial', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Overlay Styling */
+#overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: black;
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
+    transition: opacity 1s ease;
+}
+#overlay button {
+    padding: 15px 30px; font-size: 1.2rem;
+    background: #ff4d6d; color: white; border: none;
+    border-radius: 50px; cursor: pointer;
+    box-shadow: 0 0 20px #ff4d6d;
+    transition: transform 0.2s;
+}
+#overlay button:hover { transform: scale(1.1); }
+
+/* Main Container */
+.hidden { display: none; }
+#main-container {
+    padding: 20px;
+    text-align: center;
+    animation: fadeIn 2s ease forwards;
+}
+
+/* Typography & Glow Effects */
+header { margin-top: 50px; margin-bottom: 40px; }
+.glow {
+    font-size: 3rem; color: #ffccd5;
+    text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055, 0 0 40px #ff0055;
+    animation: heartbeat 1.5s infinite;
+}
+.subtitle { font-size: 1.2rem; color: #ffb3c1; margin-top: 10px; }
+
+/* Photo Grid (Masonry Style) */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.photo-card {
+    background: white; padding: 10px;
+    border-radius: 10px;
+    transform: translateY(50px);
+    opacity: 0;
+    animation: slideUp 1s ease forwards;
+    box-shadow: 0 10px 30px rgba(255, 77, 109, 0.3);
+    transition: transform 0.3s;
+}
+
+.photo-card:hover { transform: scale(1.05) rotate(2deg); z-index: 10; }
+.photo-card img { width: 100%; border-radius: 5px; display: block; }
+
+/* Message Section */
+.message {
+    margin-top: 60px; margin-bottom: 60px;
+    font-size: 1.5rem; color: #fff0f3;
+}
+
+/* Falling Hearts Effect */
+.heart {
+    position: fixed; top: -10vh;
+    color: #ff4d6d; font-size: 20px;
+    animation: fall linear forwards;
+    z-index: -1;
+}
+
+/* Animations */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+@keyframes fall {
+    to { transform: translateY(110vh) rotate(360deg); }
+}

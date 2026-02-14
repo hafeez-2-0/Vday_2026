@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Journey: April 2024 - Forever</title>
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- General Styles --- */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #fff0f3;
+            font-family: 'Playfair Display', serif;
+            color: #590d22;
+            overflow-x: hidden;
+            cursor: none; /* Hides default cursor */
+        }
+
+        /* --- Background Animation Container --- */
+        #bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Behind content, in front of background color */
+            pointer-events: none; /* Let mouse clicks pass through */
+            overflow: hidden;
+        }
+
+        .falling-element {
+            position: absolute;
+            top: -10%;
+            color: #ffb3c1; /* Soft pink */
+            opacity: 0.6;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: translateY(110vh) rotate(360deg) translateX(50px); opacity: 0; }
+        }
+
+        /* --- Custom Cursor --- */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #c9184a;
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #ff4d6d;
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+            transition: width 0.2s, height 0.2s;
+        }
+
+        .heart-trail {
+            position: fixed;
+            font-size: 20px;
+            color: #ff4d6d;
+            pointer-events: none;
+            animation: floatUp 1s linear forwards;
+            z-index: 9998;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-50px) scale(0); opacity: 0; }
+        }
+
+        /* --- Typography --- */
+        h1, h2, h3 { font-family: 'Dancing Script', cursive; }
+        p { line-height: 1.6; font-size: 1.1rem; }
+
+        /* --- Header Section with Background Image --- */
+        .header-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            z-index: 1; /* Ensures text sits above falling flowers */
+            
+            /* --- UPLOAD YOUR HEADER BACKGROUND HERE --- */
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('YOUR_HEADER_IMAGE.jpg'); 
+            
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Parallax effect */
+        }
+
+        .header-section h1 {
+            font-size: 5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+        
+        .header-section p {
+            font-size: 1.5rem;
+            color: #ffccd5;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+        }
+
+        /* --- Content Container --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 1; /* Ensures content sits above falling flowers */
+        }
+
+        .love-note {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(164, 19, 60, 0.1);
+            margin-bottom: 80px;
+        }
+
+        /* --- Grid for 6 Images + 2 Videos --- */
+        .memories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Responsive columns */
+            gap: 40px;
+        }
+
+        .memory-card {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .memory-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .media-container {
+            width: 100%;
+            height: 300px;
+            background-color: #ffe5ec;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .media-container img, .media-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .caption-title { color: #c9184a; margin: 10px 0 5px 0; font-size: 1.8rem; }
+        .caption-text { font-style: italic; font-size: 0.95rem; color: #555; }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 50px 20px;
+            background-color: #590d22;
+            color: #fff0f3;
+            margin-top: 80px;
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="bg-animation"></div>
+
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+
+    <section class="header-section">
+        <div data-aos="zoom-in" data-aos-duration="2000">
+            <h1>Happpy Valentines 2026</h1>
+            <p>Since April 2024</p>
+        </div>
+    </section>
+
+    <div class="container">
+        
+        <div class="love-note" data-aos="fade-up">
+            <h2>The Long Road to 'Us'</h2>
+            <br>
+            <p>We proposed in college, full of dreams and nervous excitement. Since that day in April, the road hasn't been easy. We are fighting for our long-term goal—to marry each other—against every odd stacked against us.</p>
+            <p>But every struggle is worth it because the prize is you.</p>
+        </div>
+
+        <div class="memories-grid">
+
+            <div class="memory-card" data-aos="fade-up">
+                <div class="media-container">
+                    <img src="YOUR_IMAGE_1.jpg" alt="Memory 1">
+                </div>
+                <h3 class="caption-title">Adventures</h3>
+                <p class="caption-text">"I don’t even remember how many trips and little adventures we went on — I just remember how happy I was with you."</p>
+            </div>
+
+            <div class="memory-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="media-container">
+                    <img src="YOUR_IMAGE_2.jpg" alt="Memory 2">
+                </div>
+                <h3 class="caption-title">College Days</h3>
+                <p class="caption-text">"Life gave me many days, but the ones spent with you in college became the best chapters of my story."</p>
+            </div>
+
+            <div class="memory-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="media-container">
+                    <img src="YOUR_VIDEO_1.gif" alt="Memory 2">
+                </div>
+                <h3 class="caption-title">Our Laughter</h3>
+                <p class="caption-text">"I still think about the laughter we shared in that classroom… but more than anything, I remember how beautiful your smile was."</p>
+            </div>
+
+            <div class="memory-card" data-aos="fade-up">
+                <div class="media-container">
+                    <img src="YOUR_IMAGE_3.jpg" alt="Memory 3">
+                </div>
+                <h3 class="caption-title">Movies</h3>
+                <p class="caption-text">"There were a lot of movies we watched together, The screens were full of stories, yet the only one I ever watched was your face beside me."</p>
+            </div>
+
+            <div class="memory-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="media-container">
+                    <img src="YOUR_IMAGE_4.jpg" alt="Memory 4">
+                </div>
+                <h3 class="caption-title">Lucky me</h3>
+                <p class="caption-text">"The malls were filled with beautiful things, but none of them ever matched the beauty walking beside me.."</p>
+            </div>
+
+            <div class="memory-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="media-container">
+                    <img src="YOUR_video2.gif" alt="Memory 4">
+                </div>
+                <h3 class="caption-title">Highs and lows</h3>
+                <p class="caption-text">"Life took us on many rides — some high, some low — but your presence was the one thing that never changed."</p>
+            </div>
+
+            <div class="memory-card" data-aos="fade-up">
+                <div class="media-container">
+                    <img src="YOUR_IMAGE_5.jpeg" alt="Memory 5">
+                </div>
+                <h3 class="caption-title">Small moments</h3>
+                <p class="caption-text">"It’s the little moments with you that matter the most to me — I want to smile beside you for an eternity."</p>
+            </div>
+
+            <div class="memory-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="media-container">
+                    <img src="YOUR_IMAGE_6.jpeg" alt="Memory 6">
+                </div>
+                <h3 class="caption-title">Promise</h3>
+                <p class="caption-text">"Some bonds are meant to last forever… ours is one of them. Let’s promise we never let go."</p>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <div data-aos="zoom-in">
+            <h2>To Be Continued...</h2>
+            <p>Our story doesn't end here.</p>
+            <p>Waiting for the day you say "Qubul hai" and call me "Husband".</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+
+        // --- Custom Cursor Logic ---
+        const cursorDot = document.querySelector('[data-cursor-dot]');
+        const cursorOutline = document.querySelector('[data-cursor-outline]');
+
+        window.addEventListener("mousemove", function(e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+            
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+
+            createHeartTrail(posX, posY);
+        });
+
+        // --- Heart Trail for Cursor ---
+        let lastTime = 0;
+        function createHeartTrail(x, y) {
+            const now = Date.now();
+            if (now - lastTime < 100) return; // Limit hearts to every 100ms
+            lastTime = now;
+
+            const heart = document.createElement('span');
+            heart.classList.add('heart-trail');
+            heart.innerHTML = '❤'; 
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 1000);
+        }
+
+        // --- Background Falling Animation (Sakura & Hearts) ---
+        function createFallingElement() {
+            const container = document.getElementById('bg-animation');
+            const element = document.createElement('div');
+            element.classList.add('falling-element');
+            
+            // Randomly choose between a flower petal (🌸) or a heart (❤)
+            const shapes = ['🌸', '❤', '🤍']; 
+            element.innerText = shapes[Math.floor(Math.random() * shapes.length)];
+            
+            // Random horizontal start position
+            element.style.left = Math.random() * 100 + 'vw';
+            
+            // Random animation duration (between 5s and 10s)
+            const duration = Math.random() * 5 + 5;
+            element.style.animationDuration = duration + 's';
+            
+            // Random size
+            const size = Math.random() * 15 + 10;
+            element.style.fontSize = size + 'px';
+
+            container.appendChild(element);
+
+            // Remove element after it falls to keep browser fast
+            setTimeout(() => {
+                element.remove();
+            }, duration * 1000);
+        }
+
+        // Create a new falling element every 300ms
+        setInterval(createFallingElement, 300);
+
+    </script>
+</body>
+</html>
